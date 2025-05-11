@@ -10,8 +10,9 @@ import logo from "../../assets/ParcelTrackr_Logo.jpg";
 import "./Navbar.css";
 import useAuth from "../../hooks/useAuth";
 
+
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut } = useAuth() || {};
 //   const [isAdmin] = useAdmin();
 //   const [isDeliveryMen] = useDeliveryMen();
 

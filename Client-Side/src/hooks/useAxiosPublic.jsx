@@ -3,7 +3,8 @@ import axios from "axios";
 
 
  const AxiosPublic = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials:true,
 })
 
 const useAxiosPublic = () => {
@@ -11,3 +12,4 @@ const useAxiosPublic = () => {
 };
 
 export default useAxiosPublic;
+
