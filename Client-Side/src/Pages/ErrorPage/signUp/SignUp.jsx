@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-
+// import Helmet from "react-helmet-async";
 import signUp from '../../../assets/login2.png'
 import { useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";

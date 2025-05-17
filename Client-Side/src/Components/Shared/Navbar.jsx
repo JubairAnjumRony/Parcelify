@@ -4,17 +4,20 @@ import { Link, NavLink } from "react-router-dom";
 // import useModerator from "../../../hooks/useModerator";
 import { IoNotificationsOutline } from "react-icons/io5";
 
-// import useAdmin from "../../../hooks/useAdmin";
-// import useDeliveryMen from "../../../hooks/useDeliveryMen";
+
 import logo from "../../assets/ParcelTrackr_Logo.jpg";
 import "./Navbar.css";
 import useAuth from "../../hooks/useAuth";
+import delivery from '../../assets/delivery.png';
+
+import useDeliveryMen from "../../hooks/useDeliveryMen";
+import useAdmin from "../../hooks/useAdmin";
 
 
 const Navbar = () => {
   const { user, logOut } = useAuth() || {};
-//   const [isAdmin] = useAdmin();
-//   const [isDeliveryMen] = useDeliveryMen();
+  const [isAdmin] = useAdmin();
+  const [isDeliveryMen] = useDeliveryMen();
 
   console.log(user);
   const handleLogOut = () => {
@@ -25,7 +28,7 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li>
+      <li className="text-xl">
         <NavLink
           to="/"
           className={({ isActive, isPending }) =>
@@ -46,17 +49,10 @@ const Navbar = () => {
 				</NavLink>
 			)} */}
 
-      <li>
-        {/* <NavLink
-					to="/dashboard"
-					className={({ isActive, isPending }) =>
-						isPending ? "pending" : isActive ? "active " : ""
-					}>
+     <li>
+  
 
-					Dashboard
-				</NavLink> */}
-
-        {/* {user && isAdmin && (
+        {user && isAdmin && (
           <li>
             <Link to="/dashboard/statistics" className="justify-between">
               Dashboard
@@ -69,11 +65,11 @@ const Navbar = () => {
               Dashboard
             </Link>
           </li>
-        )} */}
-        {/* && !isAdmin && !isDeliveryMen && */}
-        {user && (
+        )}
+    
+        {user &&  !isAdmin && !isDeliveryMen &&(
           <li>
-            <Link to="/dashboard/bookAParcel" className="justify-between">
+            <Link to="/dashboard/bookParcel" className="justify-between text-xl">
               Dashboard
             </Link>
           </li>
@@ -105,12 +101,12 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="w-full bg-blue-300 top-0 z-50 sticky shadow-md">
-      {/* ToDo: make the navbar sticky  */}
-      <div className="navbar md:w-3/4 mx-auto text-white ">
+    <div className="w-full  top-5 z-50 sticky ">
+      <div className="navbar md:w-3/4 mx-auto ">
         <div className="navbar-start">
+          {/* Moblie Navbar */}
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost md:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -128,37 +124,38 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-primary rounded-box w-52 font-semibold"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52 font-semibold"
             >
               {navOptions}
             </ul>
           </div>
-          <div className="lg:flex items-center hidden relative">
-            <img className="w-12 rounded-full" src={logo} alt="" width={150} />
+          {/* for medium and large device navbar */}
+          <div className="md:flex justify-between items-center hidden relative">
+            <img className="w-12 " src={delivery} alt="" width={150} />
             <Link
               to="/"
-              className=" pl-2 text-xl lg:text-2xl absolute ml-12  mt-2"
+              className=" pl-2 text-sm  lg:text-2xl absolute ml-12  mt-2"
             >
               ParcelTracker
             </Link>
           </div>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center hidden md:flex ml-5">
           <ul className="flex gap-6 px-1  font-mercellus text-base">
             {navOptions}
           </ul>
         </div>
-        <div className="lg:hidden items-center  relative ">
+        <div className="md:hidden items-center  relative ">
           <img
-            className="sm: w-10 md:w-16 "
-            src={logo}
+            className="sm: w-10 md:w-12 "
+            src={delivery}
             alt=""
             // className="w-20 mr-20 h-20"
           />
           <Link to="/">ParcelTrackr </Link>
-          {/* <a className="btn btn-ghost  text-xl lg:text-3xl absolute ml-12  mt-2">
+          <a className="btn btn-ghost  text-xl lg:text-3xl absolute ml-12  mt-2">
 					ParcelTrackr
-					</a> */}
+					</a> 
         </div>
 
         <div className="navbar-end">
@@ -166,20 +163,20 @@ const Navbar = () => {
             <>
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                  <div className="w-10 rounded-full">
-                    <img src={user.photoURL} />
+                  <div className=" rounded-full">
+                    <img className="w-14" src={user.photoURL} />
                   </div>
                 </label>
                 <ul
                   tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-[#002B44] rounded-box w-52 read-only"
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52 read-only"
                 >
                   <li>
                     <p className="justify-between">{user.displayName}</p>
                   </li>
                   <li>
                     {" "}
-                    {/* {user && isAdmin && (
+                    {user && isAdmin && (
                       <li>
                         <Link
                           to="/dashboard/statistics"
@@ -198,7 +195,7 @@ const Navbar = () => {
                           Dashboard
                         </Link>
                       </li>
-                    )} */}
+                    )}
                     {user && (
                       <li>
                         <Link

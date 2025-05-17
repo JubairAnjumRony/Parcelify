@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000
 require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 
@@ -55,7 +55,10 @@ async function run() {
     // Send a ping to confirm a successful connection
 
     const usersCollection = client.db("Percelify").collection("users");
-    await usersCollection.insertOne({anem:'rje',age:28,})
+    // await usersCollection.insertOne({anem:'rje',age:28,})
+    const parcelCollection = client.db("Percelify").collection("parcels");
+    const paymentCollection = client.db("Percelify").collection("payments");
+       const feedbackCollection = client.db("Percelify").collection("feedback");
 
         // Generate jwt token
         app.post('/jwt', async (req, res) => {
@@ -85,8 +88,99 @@ async function run() {
           res.send(result);
         })
 
+        app.get("/users",async(req,res) =>{
+          const result = await usersCollection.find().toArray();
+          res.send(result)
+        })
 
 
+         app.get("/users/admin/:email", async(req,res) => {
+          const DatabaseSearchBox = {email: req.params.email};
+          const user = await usersCollection.findOne(DatabaseSearchBox);
+          let admin = false;
+          if(user){
+            admin = user?.role ==='admin';
+          }
+          res.send({admin});
+         });
+
+        //  find DeliveryMen Email: 
+        app.get("/users/deliveryMen/:email", async(req,res) =>{
+          const email = req.params.email;
+          const query = {email: email};
+          const user = await usersCollection.findOne(query);
+          let deliveryMen = false;
+          if(user){
+            deliveryMen= user?.role==='deliveryMen';
+          }
+          res.send({deliveryMen});
+          
+        })
+
+        //Adding Parcels 
+        app.post("/parcels",async(req,res)=>{
+          const parcel=req.body;
+          const result = await parcelCollection.insertOne(parcel);
+          res.send(result);
+        })
+      // getting parcels
+        app.get("/parcels",async(req,res)=>{
+          const parcels = await parcelCollection.find().toArray();
+          res.send(parcels);
+        })
+          
+        // get parcels by id
+        app.get("/parcels/:id",async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await parcelCollection.findOne(query);
+        res.send(result);
+        })
+
+          // myParcels
+         app.get("/myParcels",async(req,res)=>{
+          const email = req.query.email;
+          const query = {email: email};
+          const result = await parcelCollection.find(query).toArray();
+          res.send(result);
+         })
+
+          
+        // update Parcel
+        app.patch("/parcels/:id",async(req,res)=>{
+          const parcel = req.body;
+          const id= req.params.id;
+          const query= {_id: new ObjectId(id)};
+          const updatedDoc ={
+            $set:{
+                 name: parcel.name,
+          email: parcel.email,
+          phoneNumber: parcel.phoneNumber,
+          parcelType: parcel.parcelType,
+          parcelWeight: parcel.parcelWeight,
+          receiverName: parcel.receiverName,
+          receiverPhoneNumber: parcel.receiverPhoneNumber,
+          deliveryAddress: parcel.deliveryAddress,
+          requestedDeliveryDate: parcel.requestedDeliveryDate,
+          deliveryAddressLatitude: parcel.deliveryAddressLatitude,
+          deliveryAddressLongitude: parcel.deliveryAddressLongitude,
+          bookingDate: parcel.bookingDate,
+          price: parcel.price,
+          status: "pending",
+            },
+          };
+          const result = await parcelCollection.updateOne(query,updatedDoc);
+          res.send(result);
+        })
+
+        // delete parcel
+        app.delete("/parcels/:id",async(req,res)=>{
+          const id = req.params.id;
+          const query = {_id: new ObjectId(id)};
+          const result = await parcelCollection.deleteOne(query);
+          res.send(result);
+        })
+    
         
         
         
