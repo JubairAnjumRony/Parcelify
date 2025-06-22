@@ -156,7 +156,7 @@ const Dashboard = () => {
 	     <div
         className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
         md:translate-x-0 w-2/3 md:w-64 fixed md:static inset-y-0 left-0 z-20
-      bg-blue-100 md:bg-white dark:bg-gray-500  shadow-lg md:shadow-none
+      bg-blue-100 md:bg-white   shadow-lg md:shadow-none
         transition-transform duration-300 ease-in-out flex flex-col min-h-screen overflow-y-auto`}
       >
         {/* text-blue-900   bg-blue-100*/}
@@ -236,7 +236,7 @@ const Dashboard = () => {
             <>
               <li>
                 <NavLink className='md:text-xl'
-                  to="/dashboard/myDelivery"
+                  to="/dashboard/myDeliveries"
                   onClick={() => setSidebarOpen(false)}
                 >
                   <TbTruckDelivery className="text-2xl mr-2" />

@@ -61,7 +61,7 @@ const Navbar = () => {
         )}
         {user && isDeliveryMen && (
           <li>
-            <Link to="/dashboard/myDelivery" className="justify-between">
+            <Link to="/dashboard/myDeliveries" className="justify-between">
               Dashboard
             </Link>
           </li>
@@ -153,9 +153,9 @@ const Navbar = () => {
             // className="w-20 mr-20 h-20"
           />
           <Link to="/">ParcelTrackr </Link>
-          <a className="btn btn-ghost  text-xl lg:text-3xl absolute ml-12  mt-2">
+          {/* <a className="btn btn-ghost  text-xl lg:text-3xl absolute ml-12  mt-2">
 					ParcelTrackr
-					</a> 
+					</a>  */}
         </div>
 
         <div className="navbar-end">
@@ -169,12 +169,12 @@ const Navbar = () => {
                 </label>
                 <ul
                   tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-52 read-only"
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm  dropdown-content rounded-box sm:w-48 md:w-52 read-only "
                 >
                   <li>
                     <p className="justify-between">{user.displayName}</p>
                   </li>
-                  <li>
+                  {/* <li> */}
                     {" "}
                     {user && isAdmin && (
                       <li>
@@ -189,14 +189,14 @@ const Navbar = () => {
                     {user && isDeliveryMen && (
                       <li>
                         <Link
-                          to="/dashboard/myDelivery"
+                          to="/dashboard/myDeliveries"
                           className="justify-between"
                         >
                           Dashboard
                         </Link>
                       </li>
                     )}
-                    {user && (
+                    {user && !isAdmin && !isDeliveryMen &&(
                       <li>
                         <Link
                           to="/"
@@ -206,11 +206,11 @@ const Navbar = () => {
                         </Link>
                       </li>
                     )}
-                  </li>
+                  {/* </li> */}
                   <li>
                     <button
                       onClick={handleLogOut}
-                      className="btn btn-ghost justify-between"
+                      className="btn btn-ghost justify-between hover:bg-red-600"
                     >
                       LogOut
                     </button>

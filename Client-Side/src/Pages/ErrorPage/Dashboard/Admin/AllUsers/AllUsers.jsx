@@ -39,6 +39,7 @@ const AllUsers = () => {
 		});
 	};
 	const handleMakeAdmin = (user) => {
+		console.log(`/users/admin/${user._id}`);
 		axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
 			// console.log(res.data);
 			if (res.data.modifiedCount > 0) {
@@ -75,13 +76,13 @@ const AllUsers = () => {
 			 {/* <Helmet>
 							<title>Dashboard || Allusers</title>
 						</Helmet> */}
-			<div className="flex justify-evenly my-4">
+			<div className="flex justify-evenly my-4 min-w-[200px] ">
 				<h2 className="text-3xl">All Users</h2>
 				<h2 className="text-3xl">Total Users: {users.length} </h2>
 			</div>
 			<div className="overflow-x-auto">
 
-				<table className="table table-zebra w-full">
+				<table className="table table-zebra w-full ">
 					{/* head */}
 					<thead>
 						<tr>
@@ -99,31 +100,31 @@ const AllUsers = () => {
 								<td>{user.name}</td>
 								<td>{user.email}</td>
 								<td className="text-blue-500 font-bold">
-									{user.role === "DeliveryMen" ? (
+									{user.role === "deliveryMen" ? (
 										"DeliveryMen"
-									) : user.role === "Admin" ? (
+									) : user.role === "admin" ? (
 										" "
 									) : (
 										<button
 											onClick={() =>
 												handleMakeDeliveryman(user)
 											}
-											className="btn btn-lg bg-blue-500 text-white"
+											className="btn btn-lg bg-blue-500 text-white rounded-xl"
 											disabled={user.role === "Admin"}>
 											<FaUsers className="text-white text-2xl"></FaUsers>
 											Make Deliveryman
 										</button>
 									)}
 								</td>
-								<td className="text-red-500 font-bold">
-									{user.role === "Admin" ? (
+								<td className="text-red-500 font-bold text-xl">
+									{user.role === "admin" ? (
 										"Admin"
 									) : (
 										<button
 											onClick={() =>
 												handleMakeAdmin(user)
 											}
-											className="btn btn-lg bg-red-200 text-red-600">
+											className="btn btn-lg bg-red-500 text-white rounded-xl">
 											<FaUsers
 												className="text-white 
                                         text-2xl"></FaUsers>

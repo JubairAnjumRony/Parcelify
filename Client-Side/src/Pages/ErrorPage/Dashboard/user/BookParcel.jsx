@@ -91,6 +91,8 @@ const BookParcel = () => {
             
 	};
 
+	
+
 	return (
 		  
         <>
@@ -101,19 +103,20 @@ const BookParcel = () => {
 			<h2 className="font-mercellus text-4xl mb-4">Book a Parcel</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<h3 className="font-mercellus text-2xl">Sender Details</h3>
-				<div className="form-control w-full my-3 space-y-2">
+				<div className="space-y-2">
 					<p>User Name : {user.displayName}</p>
 					<p>User Email : {user.email}</p>
-					<div className="form-control">
-						<label className="label">
+					<div className="form-control w-full">
+						<label className="label ">
 							<span className="label-text">Phone Number</span>
 						</label>
+						<br></br>
 						<input
 							type="text"
 							{...register("phoneNumber", { required: true })}
 							name="phoneNumber"
 							placeholder="Phone Number"
-							className="input input-bordered rounded"
+							className="input input-bordered rounded w-full"
 						/>
 						{errors.phoneNumber && (
 							<span className="text-red-500">
@@ -128,12 +131,16 @@ const BookParcel = () => {
 					<label className="label">
 						<span className="label-text">Parcel Type</span>
 					</label>
+
+                       
+
+					
 					<input
 						type="text"
 						{...register("parcelType", { required: true })}
 						name="parcelType"
 						placeholder="Parcel Type"
-						className="input input-bordered rounded"
+						className="input input-bordered rounded w-full"
 					/>
 					{errors.parcelType && (
 						<span className="text-red-500">
@@ -150,7 +157,7 @@ const BookParcel = () => {
 						{...register("parcelWeight", { required: true })}
 						name="parcelWeight"
 						placeholder="Parcel Weight"
-						className="input input-bordered rounded"
+						className="input input-bordered rounded w-full"
 						onInput={handleWeightChange}
 					/>
 					{errors.parcelWeight && (
@@ -172,7 +179,7 @@ const BookParcel = () => {
 						{...register("receiverName", { required: true })}
 						name="receiverName"
 						placeholder="Receiver's Name"
-						className="input input-bordered rounded"
+						className="input input-bordered rounded w-full"
 					/>
 					{errors.receiverName && (
 						<span className="text-red-500">
@@ -191,7 +198,7 @@ const BookParcel = () => {
 						{...register("receiverPhoneNumber", { required: true })}
 						name="receiverPhoneNumber"
 						placeholder="Receiver's Phone Number"
-						className="input input-bordered rounded"
+						className="input input-bordered rounded w-full"
 					/>
 					{errors.receiverPhoneNumber && (
 						<span className="text-red-500">
@@ -214,7 +221,7 @@ const BookParcel = () => {
 						{...register("deliveryAddress", { required: true })}
 						name="deliveryAddress"
 						placeholder="Parcel Delivery Address"
-						className="input input-bordered rounded"
+						className="input input-bordered rounded w-full"
 					/>
 					{errors.deliveryAddress && (
 						<span className="text-red-500">

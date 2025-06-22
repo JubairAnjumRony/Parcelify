@@ -14,86 +14,105 @@ import AdminRoute from "./AdminRoute";
 import Statistics from "../Pages/ErrorPage/Dashboard/Admin/Statistics/Statistics";
 import AllUsers from "../Pages/ErrorPage/Dashboard/Admin/AllUsers/AllUsers";
 import AllParcel from "../Pages/ErrorPage/Dashboard/Admin/AllParcel/AllParcel";
-
-
-
-
+import AllDeliveryMen from "../Pages/ErrorPage/Dashboard/Admin/AllDeliveryMen/AllDeliveryMen";
+import DeliveryMenRoute from "./DeliveryMenRoute";
+import MyReviews from "../Pages/ErrorPage/Dashboard/DeliveryMen/MyReviews";
+import MyDeliveries from "../Pages/ErrorPage/Dashboard/DeliveryMen/MyDeliveries";
 
 export const router = createBrowserRouter([
-    { path: "/",
-     element:<MainLayout/> ,
-     errorElement:<ErrorPage/>,
-     children:[
-     {   path:'/',
-        element:<Home/> ,},
-        
-     ],
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [{ path: "/", element: <Home /> }],
+  },
 
-   
-        
-        },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signUp",
+    element: <SignUp />,
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      // user routes
+      { path: "bookParcel", element: <BookParcel /> },
+      {
+        path: "myProfile",
+        element: <MyProfile />,
+      },
+      {
+        path: "myParcel",
+        element: <MyParcel />,
+      },
+      {
+        path: "updateParcels/:id",
+        element: <UpdateParcel />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/parcels/${params.id}`),
+      },
 
-        {
-            path:'/login',
-            element:<Login/>,
-        },
-        {
-            path:'/signUp',
-            element:<SignUp/>,
-        },
-        {
-            path:'dashboard',
-            element: (
-                <PrivateRoute>
-                    <Dashboard></Dashboard>
-                </PrivateRoute>
-            ),
-            errorElement: <ErrorPage/>,
-            children:[
-                // user routes
-            {path:'bookParcel',
-            element:<BookParcel/>
-                
-            },
-            {
-                path:'myProfile',
-                element: <MyProfile/>
+      // admin routes
+      {
+        path: "statistics",
+        element: (
+          <AdminRoute>
+            <Statistics></Statistics>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allUser",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allParcel",
+        element: (
+          <AdminRoute>
+            <AllParcel></AllParcel>
+          </AdminRoute>
+        ),
+      },
 
-            },
-            {
-                path:'myParcel',
-                element:<MyParcel/>
-            },
-            {
-                path:'updateParcels',
-                element:<UpdateParcel/>
-            },
-           
+      {
+        path: "allDeliveryMen",
+        element: (
+          <AdminRoute>
+            <AllDeliveryMen />
+          </AdminRoute>
+        ),
+      },
 
-            // admin routes
-            {
-          path:'statistics',
-                element:(<AdminRoute>
-                    <Statistics></Statistics>
-                </AdminRoute>),
-
-            },
-            {
-                path:'allUser',
-                element:(
-                    <AdminRoute><AllUsers></AllUsers></AdminRoute>
-                )
-            },
-            {
-                path:"allParcel",
-                element: (
-                    <AdminRoute>
-                        <AllParcel></AllParcel>
-                    </AdminRoute>
-                ),
-            },
-
-
-            ] 
-        }
-  ]);
+      // deliveryMenRoute
+      {
+        path: "myDeliveries",
+        element: (
+          <DeliveryMenRoute>
+            <MyDeliveries />
+          </DeliveryMenRoute>
+        ),
+      },
+      {
+        path: "myReviews",
+        element: (
+          <DeliveryMenRoute>
+            <MyReviews />
+          </DeliveryMenRoute>
+        ),
+      },
+    ],
+  },
+]);
