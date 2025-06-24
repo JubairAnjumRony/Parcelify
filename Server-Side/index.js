@@ -298,8 +298,18 @@ async function run() {
 
       }))
     })
-
  
+
+    // My DeliveryList for DeliveryMen
+    app.get('/myDeliveryList',async(req,res) =>{
+      const email = req.query?.email;
+      const user = await usersCollection.findOne({email:email});
+      const deliveryMenId = user._id.toString();
+      const result = await parcelCollection.find({deliveryManId: deliveryMenId}).toArray();
+      res.send(result);
+    })    
+ 
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"

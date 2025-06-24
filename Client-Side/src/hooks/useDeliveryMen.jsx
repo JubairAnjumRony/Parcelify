@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+// import { useLocation } from 'react-router';
 import useAxiosSecure from './useAxiosSecure';
 import { useQuery } from "@tanstack/react-query";
 import useAuth from './useAuth';
 const useDeliveryMen = () => {
-    const location = useLocation();
+    // const location = useLocation();
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
 
