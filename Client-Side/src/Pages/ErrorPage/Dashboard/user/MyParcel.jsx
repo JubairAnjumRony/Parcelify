@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { MdOutlineRateReview } from "react-icons/md";
 import { useState } from "react";
 
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 import useMyParcels from "../../../../hooks/useMyParcels";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import useAuth from "../../../../hooks/useAuth";
@@ -35,6 +35,7 @@ const MyPercel = () => {
 				axiosPublic.delete(`/parcels/${id}`).then((res) => {
 					if (res.data.deletedCount > 0) {
 						refetch();
+
 						Swal.fire({
 							title: "Deleted!",
 							text: "Your parcel has been deleted.",
@@ -55,7 +56,7 @@ const MyPercel = () => {
              user_image:data.user_image,
             rating:parseInt(data.rating),
             feedback:data.feedback,
-            eliveryMenId:data.deliveryMenId, 
+            deliveryMenId:data.deliveryMenId, 
             feedbackDate}
 
 		const result = await axiosPublic.post('/feedback',feedbackInfo);
@@ -99,18 +100,18 @@ const MyPercel = () => {
             >
                 <option value="All">All</option>
                 <option value="pending">Pending</option>
-                <option value="On The Way">On The Way</option>
+                <option value="on The way">On The Way</option>
                 <option value="Delivered">Delivered</option>
                 <option value="Cancelled">Cancelled</option>
             </select>
         </div>
 
 
-		<div className="p-4  min-h-screen">
+		<div className="py-4  min-h-screen">
     <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
-        <table className="table-auto w-full text-left bg-whit">
+        <table className="table-auto w-full text-left bg-white">
              {/* Table Header */}
-            <thead className="">
+            <thead className="border-collapse border-2">
                 <tr className="text-sm uppercase">
                     <th className="px-4 py-2">Index</th>
                     <th className="px-4 py-2">Parcel Type</th>
@@ -122,7 +123,7 @@ const MyPercel = () => {
                     <th className="px-4 py-2">Actions</th>
                 </tr>
             </thead>
-            <tbody className="text-sm  divide-y divide-gray-200">
+            <tbody className="text-sm  divide-y divide-gray-200  ">
                 {filteredParcels.map((item, index) => (
                     <tr key={item._id} className="hover:bg-gray-50">
                         <td className="px-4 py-2">{index + 1}</td>
@@ -133,7 +134,7 @@ const MyPercel = () => {
                         <td className="px-4 py-2">{item.deliveryManId}</td>
                         <td
                             className={`px-4 py-2 font-semibold ${
-                                item.status === "Delivered" || item.status === "On The Way"
+                                item.status === "Delivered" || item.status === "on The way"
                                     ? "text-green-600"
                                     : "text-red-600"
                             }`}

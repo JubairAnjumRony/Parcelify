@@ -194,6 +194,14 @@ async function run() {
       res.send(result);
     });
 
+
+    //Adding feedback 
+    app.post("/feedback", async(req,res)=>{
+      const feedback = req.body;
+      const result = await feedbackCollection.insertOne(feedback);
+      res.send(result);    
+    }) 
+
     //make DeliveryMan
     app.patch(
       "/users/deliveryMen/:id",
@@ -307,8 +315,36 @@ async function run() {
       const deliveryMenId = user._id.toString();
       const result = await parcelCollection.find({deliveryManId: deliveryMenId}).toArray();
       res.send(result);
-    })    
+    })   
+    
+    // changing parcelStatus
+    app.patch('/parcelStatus',async(req,res)=>{
+    const{parcelId,status} = req.body;
+      const query = {_id: new ObjectId(parcelId)}
+   const option = {upsert:true};
+   const updatedDoc = {
+    
+         $set:{
+          status:status
+        }
+   }
+
+
+            const result = await parcelCollection.updateOne(query,updatedDoc,option);
+            res.send(result);
+       
+      
+    })
  
+
+    // getting feedback for deliveryMen
+    app.get("/feedback/:email",async(req,res)=>{
+      const email = req.params.email;
+      const user = await usersCollection.findOne({email:email});
+      const deliveryMenId  = user._id.toString();
+      const result = await feedbackCollection.find({deliveryMenId: deliveryMenId}).toArray();
+      res.send(result);
+    })
 
     await client.db("admin").command({ ping: 1 });
     console.log(

@@ -3,7 +3,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
-import { Helmet } from "react-helmet-async";
+// import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
